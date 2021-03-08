@@ -30,6 +30,22 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAQ1DpuUgW9jtPOxAEId9qVNNDUaG4aP0g",
+      authDomain: "flutter-coffee-60216.firebaseapp.com",
+      projectId: "flutter-coffee-60216",
+      storageBucket: "flutter-coffee-60216.appspot.com",
+      messagingSenderId: "1052581709603",
+      appId: "1:1052581709603:web:e78c42ded21a6f559cae96"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
