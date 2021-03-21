@@ -3,21 +3,20 @@ import 'package:flutter_coffee/services/auth.dart';
 import 'package:flutter_coffee/shared/constants.dart';
 import 'package:flutter_coffee/shared/loading.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
 
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  bool loading = false;
-
   String error = '';
+  bool loading = false;
 
   String userMail = '';
   String userPassword = '';
@@ -31,19 +30,18 @@ class _SignInState extends State<SignIn> {
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
-              title: Text('Sign in to coffee app'),
+              title: Text('Sign up to coffee app'),
               actions: [
                 TextButton.icon(
                     onPressed: () {
-                      print('toto');
                       widget.toggleView();
                     },
                     icon: Icon(
                       Icons.login,
                       color: Colors.black,
                     ),
-                    label: Text('Register',
-                        style: TextStyle(color: Colors.black))),
+                    label:
+                        Text('Login', style: TextStyle(color: Colors.black))),
               ],
             ),
             body: Container(
@@ -78,26 +76,27 @@ class _SignInState extends State<SignIn> {
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.pink[400], onPrimary: Colors.white),
+                        child: Text(
+                          'Register',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            setState(() => loading = true);
+                            setState(() {
+                              loading = true;
+                            });
                             dynamic result =
-                                await _auth.signIn(userMail, userPassword);
+                                await _auth.register(userMail, userPassword);
                             if (result == null) {
                               setState(() {
                                 loading = false;
-                                error =
-                                    'Could not sign in with those credentials';
+                                error = 'Please supply a valid email';
                               });
                             }
                           } else {
                             print("form isn't valid");
                           }
-                        },
-                        child: Text(
-                          'Sign in',
-                          style: TextStyle(color: Colors.white),
-                        )),
+                        }),
                     SizedBox(height: 12.0),
                     Text(error,
                         style: TextStyle(color: Colors.red, fontSize: 14))

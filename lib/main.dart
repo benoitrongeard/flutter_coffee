@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_coffee/models/user.dart';
 import 'package:flutter_coffee/screens/auth-wrapper.dart';
-
-import 'components/loading.dart';
+import 'package:flutter_coffee/services/auth.dart';
+import 'package:flutter_coffee/shared/loading.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,18 +22,26 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return Loading();
+          return MaterialApp(
+            home: Loading(),
+          );
         }
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
-            home: AuthWrapper(),
+          return StreamProvider<UserCoffee>.value(
+            value: AuthService().user,
+            initialData: null,
+            child: MaterialApp(
+              home: AuthWrapper(),
+            ),
           );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return Loading();
+        return MaterialApp(
+          home: Loading(),
+        );
       },
     );
   }
